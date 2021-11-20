@@ -1,0 +1,1 @@
+fun main() = readLine()!!.reversed().run { println(if (this.length > 1) this[1] else '0') }
