@@ -152,6 +152,12 @@ files:
         println("Hello, World!")
     }
   learner_created: false
-feedback_link: https://hyperskill.org/projects/89/stages/495/implement#comment
-status: Unchecked
-record: -1
+- name: src/search/Search.kt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/7818#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 20 Nov 2021 10:56:19 UTC
+record: 2

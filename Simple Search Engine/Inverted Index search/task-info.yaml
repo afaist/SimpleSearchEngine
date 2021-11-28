@@ -290,6 +290,108 @@ files:
     }
 
   learner_created: false
-feedback_link: https://hyperskill.org/projects/89/stages/498/implement#comment
-status: Unchecked
-record: -1
+- name: src/search/MenuItems.kt
+  visible: true
+  text: |-
+    package search
+
+    enum class MenuItems(val item: String) {
+        FIND_PERSON ("1. Find a person"),
+        PRINT_ALL_PEOPLE("2. Print all people"),
+        EXIT("0. Exit")
+
+    }
+  learner_created: true
+- name: src/search/DB.kt
+  visible: true
+  text: |-
+    package search
+
+    import java.io.File
+
+    class DB {
+        private val df = mutableListOf<String>()
+        private var found = mutableListOf<Int>()
+
+        /**
+         * Load data from file
+         *
+         * @param filename
+         * @return - result loading
+         */
+        fun loadFromFile(filename: String): Boolean {
+            val file = File(filename)
+            return if (file.exists()) {
+                df.clear()
+                file.forEachLine {
+                    df.add(it)
+                }
+                true
+            } else {
+                println("File $filename not found!!")
+                false
+            }
+        }
+
+        /**
+         * Find string in data
+         *
+         * @param string
+         */
+        fun find(string: String) {
+            found.clear()
+            for (i in df.indices) {
+                if (df[i].lowercase().contains(string.lowercase())) {
+                    found.add(i)
+                }
+            }
+            if (found.size > 0) {
+                for (i in found) {
+                    println(df[i])
+                }
+            } else {
+                println("No matching people found.")
+            }
+        }
+
+        fun printAllData() {
+            println("\n=== List of people ===")
+            println(df.joinToString("\n"))
+        }
+
+    }
+  learner_created: true
+- name: src/search/Menu.kt
+  visible: true
+  text: |-
+    package search
+
+    object Menu {
+        private val menuItems = listOf(
+            MenuItems.EXIT,
+            MenuItems.FIND_PERSON,
+            MenuItems.PRINT_ALL_PEOPLE
+        )
+
+        private fun printMenu() {
+            println("\n=== Menu ===")
+            println(menuItems.joinToString("\n") { it.item })
+        }
+
+        fun getMenuItemFromConsole(): MenuItems {
+            while (true) {
+                printMenu()
+                val item = readLine()!!.toInt()
+                if (item !in menuItems.indices) {
+                    println("\nIncorrect option! Try again.")
+                } else return menuItems[item]
+            }
+        }
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/7821#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 27 Nov 2021 08:26:15 UTC
+record: 5

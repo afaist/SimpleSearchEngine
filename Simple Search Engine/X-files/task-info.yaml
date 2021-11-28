@@ -10,62 +10,6 @@ files:
         println("Hello, World!")
     }
   learner_created: false
-- name: test/SearchEngineTests.java
-  visible: false
-  text: |
-    public class SearchEngineTests {
-        public static final String NAMES = "Kristofer Galley\n" +
-            "Fernando Marbury fernando_marbury@gmail.com\n" +
-            "Kristyn Nix nix-kris@gmail.com\n" +
-            "Regenia Enderle\n" +
-            "Malena Gray\n" +
-            "Colette Mattei\n" +
-            "Wendolyn Mcphillips\n" +
-            "Jim Gray\n" +
-            "Coreen Beckham\n" +
-            "Bob Yeh bobyeah@gmail.com\n" +
-            "Shannan Strope stropeshah@gmail.com\n" +
-            "Yer Fillion\n" +
-            "Margene Resendez marres@gmail.com\n" +
-            "Blossom Ambler\n" +
-            "Teri Ledet teri_ledet@gmail.com\n" +
-            "Dana Baron baron@gmail.com\n" +
-            "Abram Goldsberry\n" +
-            "Yer Leopold\n" +
-            "Stefania Trunzo\n" +
-            "Alexis Leopold\n" +
-            "Carlene Pompa\n" +
-            "Oliver Dacruz\n" +
-            "Jonie Richter\n" +
-            "Pasquale Gallien gallien@evilcorp.com\n" +
-            "Verdie Gentle\n" +
-            "Gerardo Strouth gallien@evilcorp.com\n" +
-            "Agripina Dones\n" +
-            "Latricia Niebuhr\n" +
-            "Malena Schommer\n" +
-            "Drema Leopold\n" +
-            "Heide Payeur\n" +
-            "Ranae Digiovanni\n" +
-            "Simona Pereira\n" +
-            "Nick Digiovanni\n" +
-            "Angelita Wigington gallien@evilcorp.com\n" +
-            "Elin Gray\n" +
-            "Dwain Trunzo\n" +
-            "Boris Beiler\n" +
-            "Remi Malek fsociefy@gmail.com\n" +
-            "Demetria Hostetler gallien@evilcorp.com\n" +
-            "Nydia Mcduffie\n" +
-            "Florencio Defibaugh\n" +
-            "Warner Giblin\n" +
-            "May Mans\n" +
-            "Shu Gray\n" +
-            "Kaycee Gray\n" +
-            "Victorina Froehlich victory@gmail.com\n" +
-            "Roseanne Gray\n" +
-            "Erica Radford hisam@gmail.com\n" +
-            "Elyse Pauling";
-    }
-  learner_created: false
 - name: test/SimpleSearchEngineTest.java
   visible: false
   text: |+
@@ -284,6 +228,136 @@ files:
     }
 
   learner_created: false
-feedback_link: https://hyperskill.org/projects/89/stages/497/implement#comment
-status: Unchecked
-record: -1
+- name: src/search/MenuItems.kt
+  visible: true
+  text: |-
+    package search
+
+    enum class MenuItems(val item: String) {
+        FIND_PERSON ("1. Find a person"),
+        PRINT_ALL_PEOPLE("2. Print all people"),
+        EXIT("0. Exit")
+
+    }
+  learner_created: true
+- name: src/search/DB.kt
+  visible: true
+  text: |-
+    package search
+
+    class DB(private val array: Array<String>) {
+        private val df = array.map { it.lowercase() }
+        private var found = mutableListOf<Int>()
+        fun find(string: String) {
+            found.clear()
+            for (i in df.indices) {
+                if (df[i].contains(string.lowercase())) {
+                    found.add(i)
+                }
+            }
+            if (found.size > 0) {
+                for (i in found) {
+                    println(array[i])
+                }
+            } else {
+                println("No matching people found.")
+            }
+        }
+
+        fun printAllData() {
+            println("\n=== List of people ===")
+            println(array.joinToString("\n"))
+        }
+
+    }
+  learner_created: true
+- name: src/search/Menu.kt
+  visible: true
+  text: |-
+    package search
+
+    object Menu {
+        private val menuItems = listOf(
+            MenuItems.EXIT,
+            MenuItems.FIND_PERSON,
+            MenuItems.PRINT_ALL_PEOPLE
+        )
+
+        fun printMenu() {
+            println("\n=== Menu ===")
+            println(menuItems.joinToString("\n") { it.item })
+        }
+
+        fun getMenuItemFromConsole(): MenuItems {
+            while (true) {
+                printMenu()
+                val item = readLine()!!.toInt()
+                if (item !in menuItems.indices) {
+                    println("\nIncorrect option! Try again.")
+                } else return menuItems[item]
+            }
+        }
+    }
+  learner_created: true
+- name: test/SearchEngineTests.java
+  visible: false
+  text: |
+    public class SearchEngineTests {
+        public static final String NAMES = "Kristofer Galley\n" +
+            "Fernando Marbury fernando_marbury@gmail.com\n" +
+            "Kristyn Nix nix-kris@gmail.com\n" +
+            "Regenia Enderle\n" +
+            "Malena Gray\n" +
+            "Colette Mattei\n" +
+            "Wendolyn Mcphillips\n" +
+            "Jim Gray\n" +
+            "Coreen Beckham\n" +
+            "Bob Yeh bobyeah@gmail.com\n" +
+            "Shannan Strope stropeshah@gmail.com\n" +
+            "Yer Fillion\n" +
+            "Margene Resendez marres@gmail.com\n" +
+            "Blossom Ambler\n" +
+            "Teri Ledet teri_ledet@gmail.com\n" +
+            "Dana Baron baron@gmail.com\n" +
+            "Abram Goldsberry\n" +
+            "Yer Leopold\n" +
+            "Stefania Trunzo\n" +
+            "Alexis Leopold\n" +
+            "Carlene Pompa\n" +
+            "Oliver Dacruz\n" +
+            "Jonie Richter\n" +
+            "Pasquale Gallien gallien@evilcorp.com\n" +
+            "Verdie Gentle\n" +
+            "Gerardo Strouth gallien@evilcorp.com\n" +
+            "Agripina Dones\n" +
+            "Latricia Niebuhr\n" +
+            "Malena Schommer\n" +
+            "Drema Leopold\n" +
+            "Heide Payeur\n" +
+            "Ranae Digiovanni\n" +
+            "Simona Pereira\n" +
+            "Nick Digiovanni\n" +
+            "Angelita Wigington gallien@evilcorp.com\n" +
+            "Elin Gray\n" +
+            "Dwain Trunzo\n" +
+            "Boris Beiler\n" +
+            "Remi Malek fsociefy@gmail.com\n" +
+            "Demetria Hostetler gallien@evilcorp.com\n" +
+            "Nydia Mcduffie\n" +
+            "Florencio Defibaugh\n" +
+            "Warner Giblin\n" +
+            "May Mans\n" +
+            "Shu Gray\n" +
+            "Kaycee Gray\n" +
+            "Victorina Froehlich victory@gmail.com\n" +
+            "Roseanne Gray\n" +
+            "Erica Radford hisam@gmail.com\n" +
+            "Elyse Pauling";
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7820#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 27 Nov 2021 03:56:44 UTC
+record: 4

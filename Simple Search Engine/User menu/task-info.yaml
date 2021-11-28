@@ -243,6 +243,45 @@ files:
     }
 
   learner_created: false
-feedback_link: https://hyperskill.org/projects/89/stages/496/implement#comment
-status: Unchecked
-record: -1
+- name: src/search/Menu.kt
+  visible: true
+  learner_created: true
+- name: src/search/MenuItems.kt
+  visible: true
+  learner_created: true
+- name: src/search/DB.kt
+  visible: true
+  text: |-
+    package search
+
+    class Search(private val array: Array<String>) {
+        private val df = array.map { it.lowercase() }
+        private var found = mutableListOf<Int>()
+        fun find(string: String) {
+            found.clear()
+            for (i in df.indices) {
+                if (df[i].contains(string.lowercase())) {
+                    found.add(i)
+                }
+            }
+        }
+
+        fun getFound() {
+            println()
+            if (found.size > 0) {
+                println("People found:")
+                for (i in found) {
+                    println(array[i])
+                }
+            } else {
+                println("No matching people found.")
+            }
+        }
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/7819#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 20 Nov 2021 12:32:34 UTC
+record: 3
